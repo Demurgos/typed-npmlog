@@ -1,12 +1,12 @@
 {
   "name": "npmlog",
-  "main": "index.d.ts",
+  "main": "log.d.ts",
   "homepage": "https://github.com/npm/npmlog",
-  "version": "",
+  "version": "2.0.3",
   "devDependencies": {
-    "blue-tape": "registry:npm/blue-tape#0.1.0+20160322235613"
+    "blue-tape": "registry:npm/blue-tape#0.2.0+20160418015423"
   },
-  "ambientDevDependencies": {
-    "node": "registry:dt/node#4.0.0+20160319033040"
+  "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160423143914"
   }
 }
