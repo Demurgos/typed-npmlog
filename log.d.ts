@@ -1,5 +1,5 @@
-import {Stream} from "stream";
-import {Tracker, TrackerGroup, TrackerStream} from "are-we-there-yet";
+import {Stream} from 'stream';
+import {Tracker, TrackerGroup, TrackerStream} from 'are-we-there-yet';
 
 declare let npmlog: npmlog.NpmLog;
 
@@ -218,6 +218,22 @@ declare namespace npmlog {
      */
     newGroup(name?: string, weight?: number): TrackerGroup;
 
+    // The module implements the following levels by default:
+    // log.addLevel('silly', -Infinity, { inverse: true }, 'sill')
+    // log.addLevel('verbose', 1000, { fg: 'blue', bg: 'black' }, 'verb')
+    // log.addLevel('info', 2000, { fg: 'green' })
+    // log.addLevel('http', 3000, { fg: 'green', bg: 'black' })
+    // log.addLevel('warn', 4000, { fg: 'black', bg: 'yellow' }, 'WARN')
+    // log.addLevel('error', 5000, { fg: 'red', bg: 'black' }, 'ERR!')
+    // log.addLevel('silent', Infinity)
+    silly(prefix: string, ...message: any[]): void;
+    verbose(prefix: string, ...message: any[]): void;
+    info(prefix: string, ...message: any[]): void;
+    http(prefix: string, ...message: any[]): void;
+    warn(prefix: string, ...message: any[]): void;
+    error(prefix: string, ...message: any[]): void;
+    silent(prefix: string, ...message: any[]): void;
+
     /**
      * log[level](prefix, message, ...)
      *
@@ -233,23 +249,8 @@ declare namespace npmlog {
      * Like log.log(level, prefix, message, ...). In this way, each level is given a shorthand, so you can do
      * log.info(prefix, message).
      */
-    [level: string]: (prefix: string, ...message: any[]) => void;
-
-    // The module implements the following levels by default:
-    // log.addLevel('silly', -Infinity, { inverse: true }, 'sill')
-    // log.addLevel('verbose', 1000, { fg: 'blue', bg: 'black' }, 'verb')
-    // log.addLevel('info', 2000, { fg: 'green' })
-    // log.addLevel('http', 3000, { fg: 'green', bg: 'black' })
-    // log.addLevel('warn', 4000, { fg: 'black', bg: 'yellow' }, 'WARN')
-    // log.addLevel('error', 5000, { fg: 'red', bg: 'black' }, 'ERR!')
-    // log.addLevel('silent', Infinity)
-    silly(prefix: string, ...message: any[]): void;
-    verbose(prefix: string, ...message: any[]): void;
-    info(prefix: string, ...message: any[]): void;
-    http(prefix: string, ...message: any[]): void;
-    warn(prefix: string, ...message: any[]): void;
-    error(prefix: string, ...message: any[]): void;
-    silent(prefix: string, ...message: any[]): void; // TODO: is this one really useful ?
+    // TODO: Find a solution to handle dynamically added methods
+    // [level: string]: (prefix: string, ...message: any[]) => void;
   }
 
   /**
