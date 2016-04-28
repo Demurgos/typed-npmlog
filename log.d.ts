@@ -1,4 +1,5 @@
 import {Stream} from "stream";
+import {Tracker, TrackerGroup, TrackerStream} from "are-we-there-yet";
 
 declare let npmlog: npmlog.NpmLog;
 
@@ -20,7 +21,7 @@ declare namespace npmlog {
 
 
     on (event: 'log', listener: (message?: Message) => any): this;
-    on (event: 'error', listener: (error?: Error) => any):  this;
+    on (event: 'error', listener: (error?: Error) => any): this;
     on (event: string, listener: Function): this;
 
     once (event: 'log', listener: (message?: Message) => any): this;
@@ -53,7 +54,8 @@ declare namespace npmlog {
      *
      * {Number}
      *
-     * The maximum number of records to keep. If log.record gets bigger than 10% over this value, then it is sliced down to 90% of this value.
+     * The maximum number of records to keep. If log.record gets bigger than 10% over this value, then it is sliced
+     * down to 90% of this value.
      *
      * The reason for the 10% window is so that it doesn't have to resize a large array on every log entry.
      */
@@ -179,7 +181,8 @@ declare namespace npmlog {
      *
      * Sets up a new level with a shorthand function and so forth.
      *
-     * Note that if the number is Infinity, then setting the level to that will cause all log messages to be suppressed. If the number is -Infinity, then the only way to show it is to enable all log messages.
+     * Note that if the number is Infinity, then setting the level to that will cause all log messages to be
+     * suppressed. If the number is -Infinity, then the only way to show it is to enable all log messages.
      */
     addLevel(level: string, n: number, style: Style, disp?: string): void;
 
@@ -190,23 +193,26 @@ declare namespace npmlog {
      * - todo {Number} Optional; total amount of work to be done. Default 0.
      * - weight {Number} Optional; the weight of this item relative to others. Default 1.
      *
-     * This adds a new are-we-there-yet item tracker to the progress tracker. The object returned has the log[level] methods but is otherwise an are-we-there-yet Tracker object.
+     * This adds a new are-we-there-yet item tracker to the progress tracker. The object returned has the log[level]
+     * methods but is otherwise an are-we-there-yet Tracker object.
      */
-    newItem(name?: string, todo?: number, weight?: number): void;
+    newItem(name?: string, todo?: number, weight?: number): Tracker;
 
     /**
      * log.newStream(name, todo, weight)
      *
-     * This adds a new are-we-there-yet stream tracker to the progress tracker. The object returned has the log[level] methods but is otherwise an are-we-there-yet TrackerStream object.
+     * This adds a new are-we-there-yet stream tracker to the progress tracker. The object returned has the log[level]
+     * methods but is otherwise an are-we-there-yet TrackerStream object.
      */
-    newStream(name: string, todo: number, weight: number): void;
+    newStream(name?: string, todo?: number, weight?: number): TrackerStream;
 
     /**
      * log.newGroup(name, weight)
      *
-     * This adds a new are-we-there-yet tracker group to the progress tracker. The object returned has the log[level] methods but is otherwise an are-we-there-yet TrackerGroup object.
+     * This adds a new are-we-there-yet tracker group to the progress tracker. The object returned has the log[level]
+     * methods but is otherwise an are-we-there-yet TrackerGroup object.
      */
-    newGroup(name: string, weight: number): void;
+    newGroup(name?: string, weight?: number): TrackerGroup;
 
     /**
      * log[level](prefix, message, ...)
@@ -220,7 +226,8 @@ declare namespace npmlog {
      * log.warn(prefix, message, ...)
      * log.error(prefix, message, ...)
      *
-     * Like log.log(level, prefix, message, ...). In this way, each level is given a shorthand, so you can do log.info(prefix, message).
+     * Like log.log(level, prefix, message, ...). In this way, each level is given a shorthand, so you can do
+     * log.info(prefix, message).
      */
     [level: string]: (prefix: string, ...message: string[]) => void;
 
@@ -261,7 +268,8 @@ declare namespace npmlog {
   /**
    * Message Objects
    *
-   * Every log event is emitted with a message object, and the log.record list contains all of them that have been created. They have the following fields:
+   * Every log event is emitted with a message object, and the log.record list contains all of them that have been
+   * created. They have the following fields:
    *
    * - id {Number}
    * - level {String}

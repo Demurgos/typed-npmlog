@@ -8,5 +8,8 @@
   },
   "ambientDependencies": {
     "node": "registry:dt/node#4.0.0+20160423143914"
+  },
+  "dependencies": {
+    "are-we-there-yet": "registry:npm/are-we-there-yet#1.1.2+20160427210732"
   }
 }
