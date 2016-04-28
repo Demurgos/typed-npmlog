@@ -173,7 +173,7 @@ declare namespace npmlog {
      *
      * Emit a log message at the specified level.
      */
-    log(level: string, prefix: string, ...message: string[]): void;
+    log(level: string, prefix: string, ...message: any[]): void;
 
     /**
      * log.addLevel(level, n, style, disp)
@@ -233,7 +233,7 @@ declare namespace npmlog {
      * Like log.log(level, prefix, message, ...). In this way, each level is given a shorthand, so you can do
      * log.info(prefix, message).
      */
-    [level: string]: (prefix: string, ...message: string[]) => void;
+    [level: string]: (prefix: string, ...message: any[]) => void;
 
     // The module implements the following levels by default:
     // log.addLevel('silly', -Infinity, { inverse: true }, 'sill')
@@ -243,13 +243,13 @@ declare namespace npmlog {
     // log.addLevel('warn', 4000, { fg: 'black', bg: 'yellow' }, 'WARN')
     // log.addLevel('error', 5000, { fg: 'red', bg: 'black' }, 'ERR!')
     // log.addLevel('silent', Infinity)
-    silly(prefix: string, ...message: string[]): void;
-    verbose(prefix: string, ...message: string[]): void;
-    info(prefix: string, ...message: string[]): void;
-    http(prefix: string, ...message: string[]): void;
-    warn(prefix: string, ...message: string[]): void;
-    error(prefix: string, ...message: string[]): void;
-    silent(prefix: string, ...message: string[]): void; // TODO: is this one really useful ?
+    silly(prefix: string, ...message: any[]): void;
+    verbose(prefix: string, ...message: any[]): void;
+    info(prefix: string, ...message: any[]): void;
+    http(prefix: string, ...message: any[]): void;
+    warn(prefix: string, ...message: any[]): void;
+    error(prefix: string, ...message: any[]): void;
+    silent(prefix: string, ...message: any[]): void; // TODO: is this one really useful ?
   }
 
   /**
@@ -286,7 +286,7 @@ declare namespace npmlog {
     level: string;
     prefix: string;
     message: string;
-    messageRaw: string[];
+    messageRaw: any[];
   }
 }
 
