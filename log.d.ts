@@ -17,6 +17,8 @@ declare namespace npmlog {
      */
     addListener (event: 'log', listener: (message?: Message) => any): this;
     addListener (event: 'error', listener: (error?: Error) => any): this;
+    // TODO: Add level-specific events ?
+    // addListener (event: 'log.info', listener: (message?: Message) => any): this;
     addListener (event: string, listener: Function): this;
 
 
@@ -27,6 +29,8 @@ declare namespace npmlog {
     once (event: 'log', listener: (message?: Message) => any): this;
     once (event: 'error', listener: (error?: Error) => any): this;
     once (event: string, listener: Function): this;
+
+    // TODO: also define emit ?
   }
 
   export interface NpmLog extends LogEmitter {
