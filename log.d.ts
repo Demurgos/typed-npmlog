@@ -3,16 +3,41 @@ import {Stream} from "stream";
 declare let npmlog: npmlog.NpmLog;
 
 declare namespace npmlog {
-  export interface NpmLog extends NodeJS.EventEmitter {
+  interface LogEmitter extends NodeJS.EventEmitter {
+
+    /**
+     * Events
+     *
+     * Events are all emitted with the message object.
+     *
+     * log Emitted for all messages
+     * log.<level> Emitted for all messages with the <level> level.
+     * <prefix> Messages with prefixes also emit their prefix as an event.
+     */
+    addListener (event: 'log', listener: (message?: Message) => any): this;
+    addListener (event: 'error', listener: (error?: Error) => any): this;
+    addListener (event: string, listener: Function): this;
+
+
+    on (event: 'log', listener: (message?: Message) => any): this;
+    on (event: 'error', listener: (error?: Error) => any):  this;
+    on (event: string, listener: Function): this;
+
+    once (event: 'log', listener: (message?: Message) => any): this;
+    once (event: 'error', listener: (error?: Error) => any): this;
+    once (event: string, listener: Function): this;
+  }
+
+  export interface NpmLog extends LogEmitter {
     /**
      * log.level
      *
      * {String}
      *
-     * The level to display logs at. Any logs at or above this level will be displayed. The special level silent will
+     * The level to display logs at. Any logs at or above this level will be displayed. The special level `silent` will
      * prevent anything from being displayed ever.
      */
-    level: string;
+    level: 'silent' | string;
 
     /**
      * log.record
@@ -117,7 +142,7 @@ declare namespace npmlog {
      *
      * Overrides the default gauge template.
      */
-    disableUnicode(template: string): void; // TODO: check the type of template
+    disableUnicode(template: string): void; // TODO: this is template for the `gauge` module
 
     /**
      * log.pause()
@@ -198,17 +223,23 @@ declare namespace npmlog {
      * Like log.log(level, prefix, message, ...). In this way, each level is given a shorthand, so you can do log.info(prefix, message).
      */
     [level: string]: (prefix: string, ...message: string[]) => void;
-  }
 
-  /**
-   * Events
-   *
-   * Events are all emitted with the message object.
-   *
-   * log Emitted for all messages
-   * log.<level> Emitted for all messages with the <level> level.
-   * <prefix> Messages with prefixes also emit their prefix as an event.
-   */
+    // The module implements the following levels by default:
+    // log.addLevel('silly', -Infinity, { inverse: true }, 'sill')
+    // log.addLevel('verbose', 1000, { fg: 'blue', bg: 'black' }, 'verb')
+    // log.addLevel('info', 2000, { fg: 'green' })
+    // log.addLevel('http', 3000, { fg: 'green', bg: 'black' })
+    // log.addLevel('warn', 4000, { fg: 'black', bg: 'yellow' }, 'WARN')
+    // log.addLevel('error', 5000, { fg: 'red', bg: 'black' }, 'ERR!')
+    // log.addLevel('silent', Infinity)
+    silly(prefix: string, ...message: string[]): void;
+    verbose(prefix: string, ...message: string[]): void;
+    info(prefix: string, ...message: string[]): void;
+    http(prefix: string, ...message: string[]): void;
+    warn(prefix: string, ...message: string[]): void;
+    error(prefix: string, ...message: string[]): void;
+    silent(prefix: string, ...message: string[]): void; // TODO: is this one really useful ?
+  }
 
   /**
    * Style Objects
